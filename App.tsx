@@ -13,7 +13,7 @@ import WorkshopForm from './WorkshopForm.tsx';
 import AdminDashboardView from './AdminDashboardView';
 import AdminLoginView from './AdminLoginView';
 import Logo from './Logo';
-import { auth } from './lib/firebase';
+import { auth } from './firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 type Tab = 'home' | 'donate' | 'volunteer' | 'workshops' | 'admin';
