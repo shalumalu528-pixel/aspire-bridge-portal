@@ -15,7 +15,7 @@ import {
   purgeMockPlaceholders
 } from './storage';
 import { Donation, Volunteer, TeamApplication, WorkshopSignup } from '../types';
-import { auth, isFirebaseConfigured } from '../lib/firebase';
+import { auth, isFirebaseConfigured } from './firebase';
 import { signOut } from 'firebase/auth';
 import {
   LayoutDashboard,
