@@ -6,13 +6,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Gift, Users, GraduationCap, Home, ShieldCheck, Sparkles, Instagram } from 'lucide-react';
-import HomeView from './components/HomeView';
-import DonateForm from './components/DonateForm';
-import VolunteerFormView from './components/VolunteerFormView';
-import WorkshopForm from './components/WorkshopForm';
-import AdminDashboardView from './components/AdminDashboardView';
-import AdminLoginView from './components/AdminLoginView';
-import Logo from './components/Logo';
+import HomeView from './HomeView';
+import DonateForm from './DonateForm';
+import VolunteerFormView from './VolunteerFormView';
+import WorkshopForm from '.WorkshopForm';
+import AdminDashboardView from './AdminDashboardView';
+import AdminLoginView from './AdminLoginView';
+import Logo from './Logo';
 import { auth } from './lib/firebase';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 
