@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { GraduationCap, BookOpen, AlertCircle, Calendar, Sparkles, ArrowLeft, Send } from 'lucide-react';
 import { motion } from 'motion/react';
-import { saveWorkshopSignup } from '../lib/storage';
+import { saveWorkshopSignup } from './storage';
 
 interface WorkshopFormProps {
   onSuccess: () => void;
