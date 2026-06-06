@@ -67,7 +67,7 @@ export default function AdminDashboardView() {
       }
       // Query "donations" with limit 1; this is public-readable and serves as a perfect connection check
       const { collection, getDocs, limit, query } = await import('firebase/firestore');
-      const { db: firestoreDb } = await import('../lib/firebase');
+      const { db: firestoreDb } = await import('./firebase');
       if (!firestoreDb) {
         throw new Error('Firebase database instance could not be initialized.');
       }
