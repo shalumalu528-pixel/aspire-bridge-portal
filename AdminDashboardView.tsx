@@ -13,7 +13,7 @@ import {
   updateVolunteerStatus,
   updateTeamApplicationStatus,
   purgeMockPlaceholders
-} from '../lib/storage';
+} from './storage';
 import { Donation, Volunteer, TeamApplication, WorkshopSignup } from '../types';
 import { auth, isFirebaseConfigured } from '../lib/firebase';
 import { signOut } from 'firebase/auth';
