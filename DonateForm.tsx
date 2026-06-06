@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Gift, Sparkles, MapPin, AlertCircle, Phone, ArrowLeft, Send, CheckCircle2, ChevronDown } from 'lucide-react';
 import { motion } from 'motion/react';
-import { saveDonation } from '../lib/storage';
+import { saveDonation } from './storage';
 
 interface DonateFormProps {
   onSuccess: () => void;
