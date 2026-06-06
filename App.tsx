@@ -9,7 +9,7 @@ import { Gift, Users, GraduationCap, Home, ShieldCheck, Sparkles, Instagram } fr
 import HomeView from './HomeView';
 import DonateForm from './DonateForm';
 import VolunteerFormView from './VolunteerFormView';
-import WorkshopForm from '.WorkshopForm';
+import WorkshopForm from './WorkshopForm.tsx';
 import AdminDashboardView from './AdminDashboardView';
 import AdminLoginView from './AdminLoginView';
 import Logo from './Logo';
