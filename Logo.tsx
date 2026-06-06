@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import logoUrl from '../assets/images/aspirebridge_logo_1780681104665.png';
+import logoUrl from './aspirebridge_logo_1780681104665.png';
 
 interface LogoProps {
   className?: string; // Overall size and styling classes
