@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, LogIn, ArrowLeft, AlertCircle } from 'lucide-react';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { auth } from './firebase';
 import Logo from './Logo';
 
 interface AdminLoginViewProps {
