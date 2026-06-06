@@ -1,0 +1,6 @@
+{
+  "name": "AspireBridge Portal",
+  "description": "A portal for AspireBridge supporting donations, volunteering, core team applications, workshop signups, and an admin dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,115 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common Global Helpers
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // 1. donations collection validation
+    function isValidDonation(data) {
+      return data.keys().hasAll(['fullName', 'phone', 'city', 'donationType', 'quantity', 'preference', 'status', 'createdAt'])
+        && data.fullName is string && data.fullName.size() <= 200
+        && data.phone is string && data.phone.size() <= 40
+        && data.city is string && data.city.size() <= 100
+        && data.donationType is string && data.donationType.size() <= 50
+        && data.quantity is string && data.quantity.size() <= 1000
+        && data.preference is string && (data.preference == 'pickup' || data.preference == 'dropoff')
+        && data.message is string && data.message.size() <= 3000
+        && data.status is string && (data.status == 'pending' || data.status == 'confirmed' || data.status == 'completed')
+        && data.createdAt is string && data.createdAt.size() <= 100;
+    }
+
+    match /donations/{donationId} {
+      allow create: if isValidId(donationId) && isValidDonation(incoming());
+      allow read: if true; // Public access as there is no custom Auth flow requested or integrated in the user UI.
+      allow update: if isValidId(donationId) && isValidDonation(incoming()) && (
+        incoming().status != existing().status // Allow updating status
+      );
+      allow delete: if false; // Deny outright
+    }
+
+    // 2. volunteers collection validation
+    function isValidVolunteer(data) {
+      return data.keys().hasAll(['fullName', 'age', 'city', 'institution', 'skills', 'availability', 'whyVolunteer', 'area', 'status', 'createdAt'])
+        && data.fullName is string && data.fullName.size() <= 200
+        && data.age is int && data.age >= 0 && data.age <= 120
+        && data.city is string && data.city.size() <= 100
+        && data.institution is string && data.institution.size() <= 200
+        && data.skills is string && data.skills.size() <= 1000
+        && data.availability is string && data.availability.size() <= 500
+        && data.whyVolunteer is string && data.whyVolunteer.size() <= 3000
+        && data.area is string && (data.area == 'events' || data.area == 'content' || data.area == 'outreach' || data.area == 'teaching' || data.area == 'media' || data.area == 'tech')
+        && data.status is string && (data.status == 'pending' || data.status == 'reviewed' || data.status == 'accepted' || data.status == 'declined')
+        && data.createdAt is string && data.createdAt.size() <= 100;
+    }
+
+    match /volunteers/{volunteerId} {
+      allow create: if isValidId(volunteerId) && isValidVolunteer(incoming());
+      allow read: if true;
+      allow update: if isValidId(volunteerId) && isValidVolunteer(incoming()) && (
+        incoming().status != existing().status
+      );
+      allow delete: if false;
+    }
+
+    // 3. coreTeamApplications (referenced as teamApplications in types but asked as coreTeamApplications)
+    function isValidTeamApplication(data) {
+      return data.keys().hasAll(['fullName', 'age', 'contact', 'skills', 'experience', 'whyJoin', 'team', 'weeklyHours', 'status', 'createdAt'])
+        && data.fullName is string && data.fullName.size() <= 200
+        && data.age is int && data.age >= 0 && data.age <= 120
+        && data.contact is string && data.contact.size() <= 300
+        && data.skills is string && data.skills.size() <= 1000
+        && data.experience is string && data.experience.size() <= 3000
+        && data.whyJoin is string && data.whyJoin.size() <= 3000
+        && data.team is string && data.team.size() <= 100
+        && data.weeklyHours is int && data.weeklyHours >= 0 && data.weeklyHours <= 168
+        && data.status is string && (data.status == 'pending' || data.status == 'reviewed' || data.status == 'accepted' || data.status == 'declined')
+        && data.createdAt is string && data.createdAt.size() <= 100;
+    }
+
+    match /coreTeamApplications/{applicationId} {
+      allow create: if isValidId(applicationId) && isValidTeamApplication(incoming());
+      allow read: if true;
+      allow update: if isValidId(applicationId) && isValidTeamApplication(incoming()) && (
+        incoming().status != existing().status
+      );
+      allow delete: if false;
+    }
+
+    // 4. workshopRegistrations (referenced as WorkshopSignup in types but asked as workshopRegistrations)
+    function isValidWorkshopSignup(data) {
+      return data.keys().hasAll(['name', 'ageClass', 'institution', 'contactNumber', 'workshopTitle', 'level', 'createdAt'])
+        && data.name is string && data.name.size() <= 200
+        && data.ageClass is string && data.ageClass.size() <= 100
+        && data.institution is string && data.institution.size() <= 200
+        && data.contactNumber is string && data.contactNumber.size() <= 100
+        && data.workshopTitle is string && data.workshopTitle.size() <= 200
+        && data.level is string && (data.level == 'beginner' || data.level == 'intermediate')
+        && data.createdAt is string && data.createdAt.size() <= 100
+        && (!data.keys().contains('parentContact') || (data.parentContact is string && data.parentContact.size() <= 500));
+    }
+
+    match /workshopRegistrations/{registrationId} {
+      allow create: if isValidId(registrationId) && isValidWorkshopSignup(incoming());
+      allow read: if true;
+      allow update: if false; // Workshop registration states don't change in current layout.
+      allow delete: if false;
+    }
+
+  }
+}
