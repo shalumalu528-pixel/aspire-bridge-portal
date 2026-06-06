@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Users, ShieldAlert, GraduationCap, Heart, ClipboardCheck, ArrowLeft, Send } from 'lucide-react';
 import { motion } from 'motion/react';
-import { saveVolunteer, saveTeamApplication } from '../lib/storage';
+import { saveVolunteer, saveTeamApplication } from './storage';
 
 interface VolunteerFormViewProps {
   onSuccess: () => void;
